@@ -5,16 +5,23 @@ const axios = require('axios');
 function extractQuotedTextAfterColon(filePath) {
     const content = fs.readFileSync(filePath, 'utf8');
     const lines = content.split('\n');
-    let extractedText = [];
+    let textToTest = [];
     
     lines.forEach(line => {
-        const match = line.match(/^.*?:\s*"([^"]*)"/);
+        const match = line.match(/^\s*\w+:\s*(['"])([^'"]*)\1/);
         if (match) {
-            extractedText.push(match[1]);
+            let extractedText = match[2]; 
+            if (!extractedText.endsWith('.')) {
+                extractedText += '.';
+            }
+            extractedText += '\n';
+            //console.log('text: %s', extractedText)
+
+            textToTest.push(extractedText);
         }
     });
     
-    return extractedText;
+    return textToTest;
 }
 
 // Function to check spelling and grammar using LanguageTool
