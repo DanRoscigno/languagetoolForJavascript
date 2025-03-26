@@ -10,12 +10,10 @@ function extractQuotedTextAfterColon(filePath) {
     lines.forEach(line => {
         const match = line.match(/^\s*\w+:\s*(['"])([^'"]*)\1/);
         if (match) {
-            let extractedText = match[2]; 
+            let extractedText = match[2].trim(); 
             if (!extractedText.endsWith('.')) {
                 extractedText += '.';
             }
-            extractedText += '\n';
-            //console.log('text: %s', extractedText)
 
             textToTest.push(extractedText);
         }
